@@ -284,7 +284,7 @@ section {
 
 /* Projects Section */
 .projects {
-    background-color: var(--bg-secondary);
+    background-color: var(--bg-primary);
 }
 
 /* Project Tabs */
@@ -397,6 +397,10 @@ section {
 }
 
 /* Contact Section */
+.contact {
+    background-color: var(--bg-secondary);
+}
+
 .contact-content {
     max-width: 600px;
     margin: 0 auto;
