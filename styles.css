@@ -228,24 +228,11 @@ section {
     border-radius: 2px;
 }
 
-/* About Section */
-.about {
+/* Skills Section */
+.skills {
     background-color: var(--bg-secondary);
 }
 
-.about-content {
-    max-width: 700px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.about-text {
-    font-size: var(--font-size-lg);
-    color: var(--text-secondary);
-    line-height: 1.8;
-}
-
-/* Skills Section */
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
