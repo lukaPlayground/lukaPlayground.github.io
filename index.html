@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="개발자 포트폴리오">
+    <title>Developer Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">🚀 Portfolio</a>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <span class="sun">☀️</span>
+                <span class="moon">🌙</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="hero-title">안녕하세요,<br><span class="highlight">만드는 사람</span> 입니다</h1>
+            <p class="hero-subtitle">AI와 함께 더 빠르고 나은 제품을 만듭니다</p>
+            <div class="hero-buttons">
+                <a href="#projects" class="btn btn-primary">프로젝트 보기</a>
+                <a href="#contact" class="btn btn-secondary">연락하기</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills" id="skills">
+        <div class="container">
+            <h2 class="section-title">Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Frontend</h3>
+                    <div class="skill-tags">
+                        <span class="tag">HTML/CSS</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">React</span>
+                        <span class="tag">Vue</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Backend</h3>
+                    <div class="skill-tags">
+                        <span class="tag">Node.js</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">PHP</span>
+                        <span class="tag">MySQL</span>
+                    </div>
+                </div>
+                <div class="skill-category">
+                    <h3>Framework & Tools</h3>
+                    <div class="skill-tags">
+                        <span class="tag">CI Board</span>
+                        <span class="tag">고도몰</span>
+                        <span class="tag">그누보드</span>
+                        <span class="tag">Git</span>
+                        <span class="tag">Figma</span>
+                        <span class="tag">Claude Code</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+        <div class="container">
+            <h2 class="section-title">Projects</h2>
+
+            <!-- Project Tabs -->
+            <div class="project-tabs">
+                <button class="tab-button active" data-tab="commercial">상업 프로젝트</button>
+                <button class="tab-button" data-tab="personal">개인 프로젝트</button>
+            </div>
+
+            <!-- Commercial Projects -->
+            <div class="projects-grid tab-content active" id="commercial">
+                <!-- Project Card 1 -->
+                <article class="project-card">
+                    <div class="project-content">
+                        <h3 class="project-title">🚗 자동차 보증서 발급 플랫폼</h3>
+                        <p class="project-description">
+                            API 기반 자동가입, 보증서 발급 시스템, 암호화된 외부 API 연동.
+                            보증서 발급부터 회원가입까지 완전 자동화된 프로세스 구현.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">PHP</span>
+                            <span class="tag">고도몰5</span>
+                            <span class="tag">MySQL</span>
+                            <span class="tag">AES-256</span>
+                            <span class="tag">REST API</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Project Card 2 -->
+                <article class="project-card">
+                    <div class="project-content">
+                        <h3 class="project-title">📚 기업용 학습관리 시스템 (LMS)</h3>
+                        <p class="project-description">
+                            통계 대시보드 및 관리자 기능 구현. 접속/쇼핑몰/학습 통계, 권한별 데이터 접근 제어.
+                            계층형 조직도와 동적 쿼리로 유연한 데이터 분석 제공.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">PHP</span>
+                            <span class="tag">CodeIgniter</span>
+                            <span class="tag">MySQL</span>
+                            <span class="tag">Google Charts</span>
+                            <span class="tag">jQuery</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Project Card 3 -->
+                <article class="project-card">
+                    <div class="project-content">
+                        <h3 class="project-title">🛒 빌링 기반 공동구매 시스템</h3>
+                        <p class="project-description">
+                            빌링키 기반 자동결제 공동구매 플랫폼. 시작/종료/결제 3단계 배치 시스템,
+                            목표수량 자동 판단, 9가지 진행상태 관리.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">PHP</span>
+                            <span class="tag">고도몰5</span>
+                            <span class="tag">NicePay Billing</span>
+                            <span class="tag">Cron</span>
+                            <span class="tag">SMS/알림톡</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Project Card 4 -->
+                <article class="project-card">
+                    <div class="project-content">
+                        <h3 class="project-title">🧬 바이오 연구소 CMS 플랫폼</h3>
+                        <p class="project-description">
+                            맞춤형 CMS 플랫폼. 다국어 지원, 제품/게시판/회원 관리 시스템.
+                            순수 PHP로 구현한 MVC 패턴과 Custom Template Engine.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">PHP</span>
+                            <span class="tag">자체 MVC</span>
+                            <span class="tag">MySQL</span>
+                            <span class="tag">다국어</span>
+                            <span class="tag">PHPMailer</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Project Card 5 -->
+                <article class="project-card">
+                    <div class="project-content">
+                        <h3 class="project-title">📦 정기배송 이커머스 플랫폼</h3>
+                        <p class="project-description">
+                            정기배송 자동결제 및 해외배송 시스템. KCP 배치 API 연동,
+                            복합과세 처리, 마일리지 자동 안분. 관리자 업무 시간 80% 절감.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">PHP</span>
+                            <span class="tag">고도몰</span>
+                            <span class="tag">KCP Batch</span>
+                            <span class="tag">MySQL</span>
+                            <span class="tag">SHA256withRSA</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Personal Projects -->
+            <div class="projects-grid tab-content" id="personal">
+                <!-- Project Card 1 -->
+                <article class="project-card">
+                    <div class="project-content">
+                        <h3 class="project-title">🎵 영어 노래 발음 학습 앱</h3>
+                        <p class="project-description">
+                            영어 가사를 한글 발음으로 변환하는 웹 앱. 5단계 폴백 시스템으로 정확도와 속도 최적화.
+                            캐싱으로 30-200배 성능 향상, Promise.all() 병렬 처리.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">Flask</span>
+                            <span class="tag">Fetch API</span>
+                            <span class="tag">LocalStorage</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/lukaPlayground/song-pronunciation-kor" target="_blank" rel="noopener noreferrer" class="project-link">GitHub</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Contact</h2>
+            <div class="contact-content">
+                <p class="contact-text">프로젝트 제안이나 협업 문의는 언제든 환영합니다!</p>
+                <div class="contact-links">
+                    <a href="https://github.com/lukaPlayground" target="_blank" rel="noopener noreferrer" class="contact-link">
+                        <span class="icon">💻</span>
+                        GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Developer Portfolio. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
