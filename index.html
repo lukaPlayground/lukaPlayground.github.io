@@ -77,12 +77,81 @@
 
             <!-- Project Tabs -->
             <div class="project-tabs">
-                <button class="tab-button active" data-tab="commercial">상업 프로젝트</button>
-                <button class="tab-button" data-tab="personal">개인 프로젝트</button>
+                <button class="tab-button active" data-tab="personal">개인 프로젝트</button>
+                <button class="tab-button" data-tab="commercial">상업 프로젝트</button>
+            </div>
+
+            <!-- Personal Projects -->
+            <div class="projects-grid tab-content active" id="personal">
+                <!-- ✅ AIKit 카드 추가 (맨 위) -->
+                <article class="project-card">
+                    <div class="project-content">
+                        <h3 class="project-title">🤖 AIKit - Universal AI API Client</h3>
+                        <p class="project-description">
+                            OpenAI, Claude, Gemini를 하나의 인터페이스로 통합한 JavaScript SDK.
+                            npm 패키지 배포, React/Vue/PHP 예제 구현, 스마트 캐싱 및 비용 추적 기능 내장.
+                            GitHub Pages로 문서 사이트 운영 중.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">npm</span>
+                            <span class="tag">React</span>
+                            <span class="tag">Vue</span>
+                            <span class="tag">PHP</span>
+                            <span class="tag">Rollup</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://lukaplayground.github.io/aikit/" target="_blank" rel="noopener noreferrer" class="project-link">Demo</a>
+                            <a href="https://github.com/lukaPlayground/aikit" target="_blank" rel="noopener noreferrer" class="project-link">GitHub</a>
+                            <a href="https://www.npmjs.com/package/@lukaplayground/aikit" target="_blank" rel="noopener noreferrer" class="project-link">npm</a>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- Project Card 1 -->
+                <article class="project-card">
+                    <div class="project-content">
+                        <h3 class="project-title">🎵 영어 노래 발음 학습 앱</h3>
+                        <p class="project-description">
+                            영어 가사를 한글 발음으로 변환하는 웹 앱. 5단계 폴백 시스템으로 정확도와 속도 최적화.
+                            캐싱으로 30-200배 성능 향상, Promise.all() 병렬 처리.
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">Flask</span>
+                            <span class="tag">Fetch API</span>
+                            <span class="tag">LocalStorage</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/lukaPlayground/song-pronunciation-kor" target="_blank" rel="noopener noreferrer" class="project-link">GitHub</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Project Card 2 -->
+                <article class="project-card">
+                    <div class="project-content">
+                        <h3 class="project-title">🎫 티켓팅 타이머</h3>
+                        <p class="project-description">
+                            공연 티켓팅을 위한 정확한 시간 동기화 및 알림 Chrome 확장 프로그램
+                            표준시 자동 동기화로 밀리초 단위 정확도 제공, 탭별 독립 타이머 설정으로 여러 공연 동시 대응, 정각 자동 알림 및 탭 활성화, 실시간 카운트다운 및 배지 표시
+                        </p>
+                        <div class="project-tags">
+                            <span class="tag">JavaScript</span>
+                            <span class="tag">Chrome Extension</span>
+                            <span class="tag">Manifest V3</span>
+                            <span class="tag">Chrome APIs</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/lukaPlayground/ticket-timer" target="_blank" rel="noopener noreferrer" class="project-link">GitHub</a>
+                        </div>
+                    </div>
+                </article>
             </div>
 
             <!-- Commercial Projects -->
-            <div class="projects-grid tab-content active" id="commercial">
+            <div class="projects-grid tab-content" id="commercial">
                 <!-- Project Card 1 -->
                 <article class="project-card">
                     <div class="project-content">
@@ -174,49 +243,6 @@
                 </article>
             </div>
 
-            <!-- Personal Projects -->
-            <div class="projects-grid tab-content" id="personal">
-                <!-- Project Card 1 -->
-                <article class="project-card">
-                    <div class="project-content">
-                        <h3 class="project-title">🎵 영어 노래 발음 학습 앱</h3>
-                        <p class="project-description">
-                            영어 가사를 한글 발음으로 변환하는 웹 앱. 5단계 폴백 시스템으로 정확도와 속도 최적화.
-                            캐싱으로 30-200배 성능 향상, Promise.all() 병렬 처리.
-                        </p>
-                        <div class="project-tags">
-                            <span class="tag">JavaScript</span>
-                            <span class="tag">Python</span>
-                            <span class="tag">Flask</span>
-                            <span class="tag">Fetch API</span>
-                            <span class="tag">LocalStorage</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/lukaPlayground/song-pronunciation-kor" target="_blank" rel="noopener noreferrer" class="project-link">GitHub</a>
-                        </div>
-                    </div>
-                </article>
-
-                <!-- Project Card 2 -->
-                <article class="project-card">
-                    <div class="project-content">
-                        <h3 class="project-title">🎫 티켓팅 타이머</h3>
-                        <p class="project-description">
-                            공연 티켓팅을 위한 정확한 시간 동기화 및 알림 Chrome 확장 프로그램
-                            표준시 자동 동기화로 밀리초 단위 정확도 제공, 탭별 독립 타이머 설정으로 여러 공연 동시 대응, 정각 자동 알림 및 탭 활성화, 실시간 카운트다운 및 배지 표시
-                        </p>
-                        <div class="project-tags">
-                            <span class="tag">JavaScript</span>
-                            <span class="tag">Chrome Extension</span>
-                            <span class="tag">Manifest V3</span>
-                            <span class="tag">Chrome APIs</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/lukaPlayground/ticket-timer" target="_blank" rel="noopener noreferrer" class="project-link">GitHub</a>
-                        </div>
-                    </div>
-                </article>
-            </div>
         </div>
     </section>
 
