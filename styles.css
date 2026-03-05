@@ -13,6 +13,8 @@
     --text-muted:   #5a7a99;
     --accent:       #4f8ef7;
     --accent-hover: #3b7ef6;
+    --accent-light: #7ab0fa;
+    --bg-hover:     #111c2e;
 
     --spacing-xs: 0.5rem;
     --spacing-sm: 1rem;
@@ -146,7 +148,7 @@ body {
 
 .btn-primary {
     background-color: var(--accent);
-    color: #fff;
+    color: var(--text-primary);
 }
 
 .btn-primary:hover {
@@ -289,8 +291,8 @@ section {
 }
 
 .project-card:hover {
-    border-left-color: #7ab0fa;
-    background-color: #111c2e;
+    border-left-color: var(--accent-light);
+    background-color: var(--bg-hover);
     transform: translateY(-4px);
     box-shadow: 0 12px 32px rgba(0,0,0,0.4);
 }
