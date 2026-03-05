@@ -3,27 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="개발자 포트폴리오">
-    <title>Developer Portfolio</title>
+    <meta name="description" content="개발자 포트폴리오 — Luka's Playground">
+    <title>Luka's Playground</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <a href="#" class="logo">🚀 Portfolio</a>
-            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-                <span class="sun">☀️</span>
-                <span class="moon">🌙</span>
-            </button>
+            <a href="#" class="logo">Luka's Playground</a>
+            <ul class="nav-links">
+                <li><a href="#projects">Work</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-content">
-            <h1 class="hero-title">안녕하세요,<br><span class="highlight">프리랜서 개발자</span> 입니다</h1>
-            <p class="hero-subtitle">AI와 함께 더 빠르고 나은 제품을 만듭니다</p>
+            <h1 class="hero-title">
+                TURNING IDEAS<br>
+                INTO <span class="accent">PRODUCTS.</span>
+            </h1>
+            <p class="hero-subtitle">
+                아이디어를 실제 제품으로 만드는 개발자.<br>
+                웹앱, 크롬 확장, 오픈소스 도구를 설계부터 배포까지.
+            </p>
             <div class="hero-buttons">
                 <a href="#projects" class="btn btn-primary">프로젝트 보기</a>
                 <a href="#contact" class="btn btn-secondary">연락하기</a>
@@ -34,37 +43,40 @@
     <!-- Skills Section -->
     <section class="skills" id="skills">
         <div class="container">
-            <h2 class="section-title">Skills</h2>
+            <div class="section-header">
+                <span class="section-number">01</span>
+                <h2 class="section-title">Skills</h2>
+            </div>
             <div class="skills-grid">
                 <div class="skill-category">
                     <h3>Frontend</h3>
-                    <div class="skill-tags">
-                        <span class="tag">HTML/CSS</span>
-                        <span class="tag">JavaScript</span>
-                        <span class="tag">React</span>
-                        <span class="tag">Vue</span>
-                    </div>
+                    <ul class="skill-list">
+                        <li>HTML / CSS</li>
+                        <li>JavaScript</li>
+                        <li>React</li>
+                        <li>Vue</li>
+                    </ul>
                 </div>
                 <div class="skill-category">
                     <h3>Backend</h3>
-                    <div class="skill-tags">
-                        <span class="tag">Node.js</span>
-                        <span class="tag">Python</span>
-                        <span class="tag">PHP</span>
-                        <span class="tag">MySQL</span>
-                        <span class="tag">REST API</span>
-                    </div>
+                    <ul class="skill-list">
+                        <li>Node.js</li>
+                        <li>Python</li>
+                        <li>PHP</li>
+                        <li>MySQL</li>
+                        <li>REST API</li>
+                    </ul>
                 </div>
                 <div class="skill-category">
-                    <h3>Framework & Tools</h3>
-                    <div class="skill-tags">
-                        <span class="tag">CI Board</span>
-                        <span class="tag">고도몰</span>
-                        <span class="tag">그누보드</span>
-                        <span class="tag">Git</span>
-                        <span class="tag">Figma</span>
-                        <span class="tag">Claude Code</span>
-                    </div>
+                    <h3>Tools &amp; etc.</h3>
+                    <ul class="skill-list">
+                        <li>CI Board</li>
+                        <li>고도몰</li>
+                        <li>그누보드</li>
+                        <li>Git</li>
+                        <li>Figma</li>
+                        <li>Claude Code</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -73,217 +85,157 @@
     <!-- Projects Section -->
     <section class="projects" id="projects">
         <div class="container">
-            <h2 class="section-title">Projects</h2>
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <h2 class="section-title">Projects</h2>
+            </div>
 
-            <!-- Project Tabs -->
             <div class="project-tabs">
                 <button class="tab-button active" data-tab="personal">개인 프로젝트</button>
                 <button class="tab-button" data-tab="commercial">상업 프로젝트</button>
+                <button class="tab-button" data-tab="tutorial">튜토리얼</button>
             </div>
 
-            <!-- Personal Projects -->
-            <div class="projects-grid tab-content active" id="personal">
-                <!-- Trip Planner -->
+            <!-- 개인 프로젝트 -->
+            <div class="tab-content active" id="personal">
                 <article class="project-card">
-                    <div class="project-content">
-                        <h3 class="project-title">🗺️ Trip Planner - 여행 일정 관리 앱</h3>
-                        <p class="project-description">
-                            지도 기반 여행 일정 관리 풀스택 웹앱. 8가지 교통수단별 실제 도로 경로 계산,
-                            드래그 앤 드롭 순서 관리, 광역 대중교통(KTX) 지원. PDF 내보내기 및 링크 공유 기능 내장.
-                        </p>
-                        <div class="project-tags">
-                            <span class="tag">React</span>
-                            <span class="tag">Node.js</span>
-                            <span class="tag">MongoDB</span>
-                            <span class="tag">Leaflet.js</span>
-                            <span class="tag">Valhalla</span>
-                            <span class="tag">JWT</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://trip-planner-woad-seven.vercel.app" target="_blank" rel="noopener noreferrer" class="project-link">Demo</a>
-                            <a href="https://github.com/lukaPlayground/trip-planner" target="_blank" rel="noopener noreferrer" class="project-link">GitHub</a>
-                        </div>
+                    <h3 class="project-title">Trip Planner</h3>
+                    <p class="project-description">지도 기반 여행 일정 관리 풀스택 웹앱. 8가지 교통수단별 실제 도로 경로 계산, 드래그 앤 드롭 순서 관리, PDF 내보내기 및 링크 공유.</p>
+                    <div class="project-tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Node.js</span>
+                        <span class="tag">MongoDB</span>
+                        <span class="tag">Leaflet.js</span>
+                        <span class="tag">JWT</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://trip-planner-woad-seven.vercel.app" target="_blank" rel="noopener noreferrer" class="project-link">Demo</a>
+                        <a href="https://github.com/lukaPlayground/trip-planner" target="_blank" rel="noopener noreferrer" class="project-link">GitHub</a>
                     </div>
                 </article>
 
-                <!-- AIKit -->
                 <article class="project-card">
-                    <div class="project-content">
-                        <h3 class="project-title">🤖 AIKit - Universal AI API Client</h3>
-                        <p class="project-description">
-                            OpenAI, Claude, Gemini를 하나의 인터페이스로 통합한 JavaScript SDK.
-                            npm 패키지 배포, React/Vue/PHP 예제 구현, 스마트 캐싱 및 비용 추적 기능 내장.
-                            GitHub Pages로 문서 사이트 운영 중.
-                        </p>
-                        <div class="project-tags">
-                            <span class="tag">JavaScript</span>
-                            <span class="tag">npm</span>
-                            <span class="tag">React</span>
-                            <span class="tag">Vue</span>
-                            <span class="tag">PHP</span>
-                            <span class="tag">Rollup</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://lukaplayground.github.io/aikit/" target="_blank" rel="noopener noreferrer" class="project-link">Demo</a>
-                            <a href="https://github.com/lukaPlayground/aikit" target="_blank" rel="noopener noreferrer" class="project-link">GitHub</a>
-                            <a href="https://www.npmjs.com/package/@lukaplayground/aikit" target="_blank" rel="noopener noreferrer" class="project-link">npm</a>
-                        </div>
+                    <h3 class="project-title">AIKit</h3>
+                    <p class="project-description">OpenAI, Claude, Gemini를 하나의 인터페이스로 통합한 JavaScript SDK. npm 패키지 배포, React/Vue/PHP 예제 구현, 스마트 캐싱 및 비용 추적 내장.</p>
+                    <div class="project-tags">
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">npm</span>
+                        <span class="tag">React</span>
+                        <span class="tag">Vue</span>
+                        <span class="tag">PHP</span>
+                        <span class="tag">Rollup</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://lukaplayground.github.io/aikit/" target="_blank" rel="noopener noreferrer" class="project-link">Demo</a>
+                        <a href="https://github.com/lukaPlayground/aikit" target="_blank" rel="noopener noreferrer" class="project-link">GitHub</a>
+                        <a href="https://www.npmjs.com/package/@lukaplayground/aikit" target="_blank" rel="noopener noreferrer" class="project-link">npm</a>
                     </div>
                 </article>
 
-                <!-- Project Card 1 -->
                 <article class="project-card">
-                    <div class="project-content">
-                        <h3 class="project-title">🎵 영어 노래 발음 학습 앱</h3>
-                        <p class="project-description">
-                            영어 가사를 한글 발음으로 변환하는 웹 앱. 5단계 폴백 시스템으로 정확도와 속도 최적화.
-                            캐싱으로 30-200배 성능 향상, Promise.all() 병렬 처리.
-                        </p>
-                        <div class="project-tags">
-                            <span class="tag">JavaScript</span>
-                            <span class="tag">Python</span>
-                            <span class="tag">Flask</span>
-                            <span class="tag">Fetch API</span>
-                            <span class="tag">LocalStorage</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/lukaPlayground/song-pronunciation-kor" target="_blank" rel="noopener noreferrer" class="project-link">GitHub</a>
-                        </div>
+                    <h3 class="project-title">Ticket Timer</h3>
+                    <p class="project-description">공연 티켓팅을 위한 정확한 시간 동기화 Chrome 확장 프로그램. 표준시 자동 동기화, 탭별 독립 타이머, 정각 자동 알림 및 탭 활성화.</p>
+                    <div class="project-tags">
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Chrome Extension</span>
+                        <span class="tag">Manifest V3</span>
                     </div>
-                </article>
-
-                <!-- Project Card 2 -->
-                <article class="project-card">
-                    <div class="project-content">
-                        <h3 class="project-title">🎫 티켓팅 타이머</h3>
-                        <p class="project-description">
-                            공연 티켓팅을 위한 정확한 시간 동기화 및 알림 Chrome 확장 프로그램
-                            표준시 자동 동기화로 밀리초 단위 정확도 제공, 탭별 독립 타이머 설정으로 여러 공연 동시 대응, 정각 자동 알림 및 탭 활성화, 실시간 카운트다운 및 배지 표시
-                        </p>
-                        <div class="project-tags">
-                            <span class="tag">JavaScript</span>
-                            <span class="tag">Chrome Extension</span>
-                            <span class="tag">Manifest V3</span>
-                            <span class="tag">Chrome APIs</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="https://github.com/lukaPlayground/ticket-timer" target="_blank" rel="noopener noreferrer" class="project-link">GitHub</a>
-                        </div>
+                    <div class="project-links">
+                        <a href="https://github.com/lukaPlayground/ticket-timer" target="_blank" rel="noopener noreferrer" class="project-link">GitHub</a>
                     </div>
                 </article>
             </div>
 
-            <!-- Commercial Projects -->
-            <div class="projects-grid tab-content" id="commercial">
-                <!-- Project Card 1 -->
+            <!-- 상업 프로젝트 -->
+            <div class="tab-content" id="commercial">
                 <article class="project-card">
-                    <div class="project-content">
-                        <h3 class="project-title">🚗 자동차 보증서 발급 플랫폼</h3>
-                        <p class="project-description">
-                            API 기반 자동가입, 보증서 발급 시스템, 암호화된 외부 API 연동.
-                            보증서 발급부터 회원가입까지 완전 자동화된 프로세스 구현.
-                        </p>
-                        <div class="project-tags">
-                            <span class="tag">PHP</span>
-                            <span class="tag">고도몰5</span>
-                            <span class="tag">MySQL</span>
-                            <span class="tag">AES-256</span>
-                            <span class="tag">REST API</span>
-                        </div>
+                    <h3 class="project-title">Auto Warranty Platform</h3>
+                    <p class="project-description">API 기반 자동가입 및 보증서 발급 시스템. 암호화된 외부 API 연동, 회원가입부터 보증서 발급까지 완전 자동화 프로세스 구현.</p>
+                    <div class="project-tags">
+                        <span class="tag">PHP</span>
+                        <span class="tag">고도몰5</span>
+                        <span class="tag">MySQL</span>
+                        <span class="tag">AES-256</span>
+                        <span class="tag">REST API</span>
                     </div>
                 </article>
 
-                <!-- Project Card 2 -->
                 <article class="project-card">
-                    <div class="project-content">
-                        <h3 class="project-title">📚 기업용 학습관리 시스템 (LMS)</h3>
-                        <p class="project-description">
-                            통계 대시보드 및 관리자 기능 구현. 접속/쇼핑몰/학습 통계, 권한별 데이터 접근 제어.
-                            계층형 조직도와 동적 쿼리로 유연한 데이터 분석 제공.
-                        </p>
-                        <div class="project-tags">
-                            <span class="tag">PHP</span>
-                            <span class="tag">CodeIgniter</span>
-                            <span class="tag">MySQL</span>
-                            <span class="tag">Google Charts</span>
-                            <span class="tag">jQuery</span>
-                        </div>
+                    <h3 class="project-title">Enterprise LMS</h3>
+                    <p class="project-description">기업용 학습관리 시스템. 통계 대시보드, 권한별 데이터 접근 제어, 계층형 조직도와 동적 쿼리로 유연한 데이터 분석 제공.</p>
+                    <div class="project-tags">
+                        <span class="tag">PHP</span>
+                        <span class="tag">CodeIgniter</span>
+                        <span class="tag">MySQL</span>
+                        <span class="tag">Google Charts</span>
                     </div>
                 </article>
 
-                <!-- Project Card 3 -->
                 <article class="project-card">
-                    <div class="project-content">
-                        <h3 class="project-title">🛒 빌링 기반 공동구매 시스템</h3>
-                        <p class="project-description">
-                            빌링키 기반 자동결제 공동구매 플랫폼. 시작/종료/결제 3단계 배치 시스템,
-                            목표수량 자동 판단, 9가지 진행상태 관리.
-                        </p>
-                        <div class="project-tags">
-                            <span class="tag">PHP</span>
-                            <span class="tag">고도몰5</span>
-                            <span class="tag">NicePay Billing</span>
-                            <span class="tag">Cron</span>
-                            <span class="tag">SMS/알림톡</span>
-                        </div>
+                    <h3 class="project-title">Group Buy Platform</h3>
+                    <p class="project-description">빌링키 기반 자동결제 공동구매 플랫폼. 시작/종료/결제 3단계 배치 시스템, 목표수량 자동 판단, 9가지 진행상태 관리.</p>
+                    <div class="project-tags">
+                        <span class="tag">PHP</span>
+                        <span class="tag">고도몰5</span>
+                        <span class="tag">NicePay Billing</span>
+                        <span class="tag">Cron</span>
                     </div>
                 </article>
 
-                <!-- Project Card 4 -->
                 <article class="project-card">
-                    <div class="project-content">
-                        <h3 class="project-title">🧬 바이오 연구소 CMS 플랫폼</h3>
-                        <p class="project-description">
-                            맞춤형 CMS 플랫폼. 다국어 지원, 제품/게시판/회원 관리 시스템.
-                            순수 PHP로 구현한 MVC 패턴과 Custom Template Engine.
-                        </p>
-                        <div class="project-tags">
-                            <span class="tag">PHP</span>
-                            <span class="tag">자체 MVC</span>
-                            <span class="tag">MySQL</span>
-                            <span class="tag">다국어</span>
-                            <span class="tag">PHPMailer</span>
-                        </div>
+                    <h3 class="project-title">Bio Research CMS</h3>
+                    <p class="project-description">바이오 연구소용 맞춤형 CMS. 다국어 지원, 제품/게시판/회원 관리. 순수 PHP로 구현한 MVC 패턴과 Custom Template Engine.</p>
+                    <div class="project-tags">
+                        <span class="tag">PHP</span>
+                        <span class="tag">자체 MVC</span>
+                        <span class="tag">MySQL</span>
+                        <span class="tag">다국어</span>
                     </div>
                 </article>
 
-                <!-- Project Card 5 -->
                 <article class="project-card">
-                    <div class="project-content">
-                        <h3 class="project-title">📦 정기배송 이커머스 플랫폼</h3>
-                        <p class="project-description">
-                            정기배송 자동결제 및 해외배송 시스템. KCP 배치 API 연동,
-                            복합과세 처리, 마일리지 자동 안분. 관리자 업무 시간 80% 절감.
-                        </p>
-                        <div class="project-tags">
-                            <span class="tag">PHP</span>
-                            <span class="tag">고도몰</span>
-                            <span class="tag">KCP Batch</span>
-                            <span class="tag">MySQL</span>
-                            <span class="tag">SHA256withRSA</span>
-                        </div>
+                    <h3 class="project-title">Subscription E-Commerce</h3>
+                    <p class="project-description">정기배송 자동결제 및 해외배송 시스템. KCP 배치 API 연동, 복합과세 처리, 마일리지 자동 안분. 관리자 업무 시간 80% 절감.</p>
+                    <div class="project-tags">
+                        <span class="tag">PHP</span>
+                        <span class="tag">고도몰</span>
+                        <span class="tag">KCP Batch</span>
+                        <span class="tag">MySQL</span>
                     </div>
                 </article>
 
-                <!-- File Manager Demo -->
                 <article class="project-card">
-                    <div class="project-content">
-                        <h3 class="project-title">📁 파일 관리 시스템</h3>
-                        <p class="project-description">
-                            서버 파일시스템 관리 도구. CodeMirror 문법 강조, 디렉토리 트리 탐색,
-                            보안 필터(위험 확장자 차단), CRUD 기능 구현.
-                            PHP 서버 연동 버전의 프론트엔드를 데모로 재현.
-                        </p>
-                        <div class="project-tags">
-                            <span class="tag">JavaScript</span>
-                            <span class="tag">CodeMirror</span>
-                            <span class="tag">PHP</span>
-                            <span class="tag">AJAX</span>
-                            <span class="tag">File System</span>
-                        </div>
-                        <div class="project-links">
-                            <a href="demos/file-manager/index.html" class="project-link">Live Demo</a>
-                        </div>
+                    <h3 class="project-title">File Manager</h3>
+                    <p class="project-description">서버 파일시스템 관리 도구. CodeMirror 문법 강조, 디렉토리 트리 탐색, 보안 필터, CRUD 기능. PHP 서버 연동 버전의 프론트엔드 데모.</p>
+                    <div class="project-tags">
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">CodeMirror</span>
+                        <span class="tag">PHP</span>
+                        <span class="tag">AJAX</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="demos/file-manager/index.html" class="project-link">Live Demo</a>
+                    </div>
+                </article>
+            </div>
+
+            <!-- 튜토리얼 -->
+            <div class="tab-content" id="tutorial">
+                <article class="project-card">
+                    <h3 class="project-title">Tutorial Collection</h3>
+                    <p class="project-description">기술 스택별 미니 프로젝트 33개 모음. 각 기술을 실제로 만들어보며 익히는 핸즈온 시리즈. Vanilla JS, React, Next.js, Flutter, Python, PHP, AI/LLM 등 다양한 스택을 다룬다.</p>
+                    <div class="project-tags">
+                        <span class="tag">Vanilla JS</span>
+                        <span class="tag">React</span>
+                        <span class="tag">Next.js</span>
+                        <span class="tag">Flutter</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">PHP</span>
+                        <span class="tag">AI / LLM</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="https://lukaplayground.github.io/tutorial" target="_blank" rel="noopener noreferrer" class="project-link">Demo</a>
+                        <a href="https://github.com/lukaPlayground/tutorial" target="_blank" rel="noopener noreferrer" class="project-link">GitHub</a>
                     </div>
                 </article>
             </div>
@@ -294,14 +246,14 @@
     <!-- Contact Section -->
     <section class="contact" id="contact">
         <div class="container">
-            <h2 class="section-title">Contact</h2>
+            <div class="section-header">
+                <span class="section-number">03</span>
+                <h2 class="section-title">Contact</h2>
+            </div>
             <div class="contact-content">
-                <p class="contact-text">프로젝트 제안이나 협업 문의는 언제든 환영합니다!</p>
+                <p class="contact-text">프로젝트 제안이나 협업 문의는 언제든 환영합니다.</p>
                 <div class="contact-links">
-                    <a href="https://github.com/lukaPlayground" target="_blank" rel="noopener noreferrer" class="contact-link">
-                        <span class="icon">💻</span>
-                        GitHub
-                    </a>
+                    <a href="https://github.com/lukaPlayground" target="_blank" rel="noopener noreferrer" class="contact-link">GitHub</a>
                 </div>
             </div>
         </div>
@@ -310,7 +262,7 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 Developer Portfolio. All rights reserved.</p>
+            <p>&copy; 2025 Luka's Playground. All rights reserved.</p>
         </div>
     </footer>
 
