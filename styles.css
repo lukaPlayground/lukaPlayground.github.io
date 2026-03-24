@@ -126,3 +126,85 @@ body {
   color: #888;
   letter-spacing: 0.1em;
 }
+
+/* ── Projects ───────────────────────────────────────── */
+.projects {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  min-height: 100vh;
+  padding: 2rem 0;
+}
+
+.projects-header {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid var(--ink);
+  margin-bottom: 0;
+}
+
+/*
+ * .project-row uses display:subgrid (not display:contents).
+ * display:contents removes the box from the render tree, breaking :hover.
+ * subgrid shares the parent's column tracks while keeping .project-row
+ * as a real hit-test target, so :hover works correctly.
+ * Supported: Chrome 117+, Firefox 71+, Safari 16+ (all modern browsers).
+ *
+ * subgrid parent context: .project-list IS the parent grid that defines
+ * the 3 column tracks. .project-row is a direct child of .project-list,
+ * so `grid-template-columns: subgrid` refers to .project-list's tracks.
+ */
+.project-list {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+}
+
+.project-row {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  cursor: pointer;
+}
+
+.project-row:hover .project-name { color: #555; }
+.project-row:hover .project-link { color: #555; }
+
+.project-name {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--rule-lt);
+  transition: color 0.2s ease;
+}
+
+.project-tags {
+  font-family: var(--font-ui);
+  font-weight: 400;
+  font-size: 0.7rem;
+  color: var(--dim);
+  padding: 1.1rem 1.5rem;
+  border-bottom: 1px solid var(--rule-lt);
+  white-space: nowrap;
+}
+
+.project-link {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: var(--ink);
+  text-decoration: none;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid var(--rule-lt);
+  transition: color 0.2s ease;
+  min-width: 1.5rem;
+  text-align: center;
+  display: block;
+}
