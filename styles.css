@@ -214,24 +214,12 @@ body {
   display: block;
 }
 
-.projects-more {
-  display: inline-block;
-  margin-top: 1.5rem;
-  font-family: var(--font-ui);
-  font-weight: 600;
-  font-size: 0.65rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
+.project-row--more .project-name {
   color: var(--dim);
-  text-decoration: none;
-  border-bottom: 1px solid var(--rule-lt);
-  padding-bottom: 0.1rem;
-  transition: color 0.2s ease, border-bottom-color 0.2s ease;
 }
 
-.projects-more:hover {
-  color: var(--ink);
-  border-bottom-color: var(--ink);
+a:visited {
+  color: inherit;
 }
 
 /* ── Contact ────────────────────────────────────────── */
