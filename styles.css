@@ -208,3 +208,108 @@ body {
   text-align: center;
   display: block;
 }
+
+/* ── Contact ────────────────────────────────────────── */
+.contact {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem 2.5rem;
+}
+
+.contact-header {
+  font-family: var(--font-ui);
+  font-weight: 400;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #555;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #333;
+}
+
+.contact-title-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.contact-title {
+  font-family: var(--font-hd);
+  font-weight: 900;
+  font-size: clamp(4rem, 10vw, 8rem);
+  line-height: 1.0;
+  color: #fff;
+  animation: fadeIn 0.6s ease-out;
+}
+
+.contact-footer {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid #333;
+}
+
+.contact-link {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px solid #fff;
+  padding-bottom: 0.1rem;
+}
+
+/* ── Dot Navigator ──────────────────────────────────── */
+.dot-nav {
+  position: fixed;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  z-index: 100;
+}
+
+/*
+ * Dot uses transform:scale for active state instead of width/height.
+ * Changing width/height causes reflow + sibling position jitter.
+ * scale() is GPU-composited — no reflow.
+ */
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ccc;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease, background 0.2s ease;
+  display: block;
+  transform: scale(0.75);
+}
+
+.dot.active {
+  transform: scale(1);
+  background: #000;
+}
+
+/* Dark section (Contact) inversion */
+.dot-nav.dot-nav--dark .dot        { background: #555; }
+.dot-nav.dot-nav--dark .dot.active { background: #fff; }
+
+/* ── Responsive ─────────────────────────────────────── */
+@media (max-width: 768px) {
+  .hero    { padding: 1.5rem; }
+  .contact { padding: 1.5rem; }
+  .dot-nav { right: 0.75rem; }
+}
