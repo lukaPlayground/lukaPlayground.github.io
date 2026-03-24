@@ -45,3 +45,84 @@ body {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/* ── Hero ───────────────────────────────────────────── */
+.hero {
+  scroll-snap-align: start;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2rem 2.5rem;
+}
+
+.hero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid var(--ink);
+}
+
+.hero-logo {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.hero-role {
+  font-family: var(--font-ui);
+  font-weight: 400;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.hero-title-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.hero-title {
+  font-family: var(--font-hd);
+  font-weight: 900;
+  font-size: clamp(4rem, 10vw, 8rem);
+  line-height: 1.0;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-title .verb { color: var(--ink); }
+.hero-title .mod  { color: var(--muted); }
+
+.hero-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.8rem;
+  border-top: 2px solid var(--ink);
+  animation: fadeIn 0.6s ease-out;
+}
+
+.hero-stack {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.hero-scroll {
+  font-family: var(--font-ui);
+  font-weight: 400;
+  font-size: 0.6rem;
+  color: #888;
+  letter-spacing: 0.1em;
+}
