@@ -132,7 +132,12 @@ body {
   scroll-snap-align: start;
   scroll-snap-stop: always;
   min-height: 100vh;
-  padding: 2rem 0;
+  padding: 2rem 2.5rem;
+}
+
+.projects .container {
+  max-width: none;
+  padding: 0;
 }
 
 .projects-header {
