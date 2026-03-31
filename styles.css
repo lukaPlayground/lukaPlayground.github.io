@@ -26,21 +26,14 @@ body {
   color: var(--ink);
 }
 
-/*
- * Scratch texture — mix-blend-mode:multiply makes dark marks blend
- * into the background naturally; white areas of the SVG are invisible.
- * baseFrequency x<<y creates elongated horizontal scratch shapes.
- * feComponentTransfer discrete thresholds marks to sparse discrete spots.
- */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 9999;
-  mix-blend-mode: multiply;
-  opacity: 0.15;
-  background-image: url("../images/white-grungy-wall-textured-background.png");
+  opacity: 0.5;
+  background-image: url("images/white-grungy-wall-textured-background.png");
   background-repeat: repeat;
   background-size: 700px auto;
 }
