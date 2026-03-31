@@ -24,7 +24,7 @@ body {
 .page {
   max-width: 780px;
   margin: 0 auto;
-  padding: 2rem 2.5rem 6rem;
+  padding: 2rem 2.5rem 8rem;
 }
 
 /* ── Top Bar ────────────────────────────────────────── */
@@ -163,11 +163,18 @@ body {
   flex-shrink: 0;
 }
 
-/* ── CTA ────────────────────────────────────────────── */
+/* ── CTA (fixed bottom bar) ─────────────────────────── */
 .cta {
-  margin-top: 4rem;
-  padding-top: 1.5rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg);
   border-top: 2px solid var(--ink);
+  padding: 1.1rem 2.5rem;
+  display: flex;
+  align-items: center;
+  z-index: 50;
 }
 
 .cta-link {

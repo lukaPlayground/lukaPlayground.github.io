@@ -173,6 +173,18 @@ body {
   grid-template-columns: subgrid;
   grid-column: 1 / -1;
   cursor: pointer;
+  position: relative;
+}
+
+/*
+ * Stretched link — .project-link::after covers the entire row,
+ * making the whole row clickable while keeping the arrow visible.
+ * Only applies when the link has an href (i.e. not an empty <span>).
+ */
+.project-link[href]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
 }
 
 .project-row:hover .project-name { color: #555; }
