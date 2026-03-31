@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File Manager — Luka's Playground</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="detail.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="top-bar">
+    <a href="../index.html" class="site-name">Luka's Playground</a>
+    <a href="../index.html#projects" class="back-link">← Work</a>
+  </header>
+
+  <div class="project-header">
+    <p class="project-label">Project</p>
+    <h1 class="project-title">File<br>Manager</h1>
+    <p class="project-tags">JS · CodeMirror · PHP</p>
+  </div>
+
+  <section class="section">
+    <p class="section-label">— Overview</p>
+    <p class="section-text">
+      브라우저에서 바로 동작하는 파일 탐색기 + 코드 에디터 데모.
+      JSON으로 정의된 디렉토리 트리를 재귀적으로 렌더링하고,
+      CodeMirror를 통해 HTML·CSS·JS·PHP 등 다국어 구문 강조 편집을 지원한다.
+    </p>
+    <p class="section-text">
+      파일 생성·삭제·저장·미리보기와 함께, 실행 가능한 확장자(.php, .sh 등)와
+      Path traversal·PHP 태그 인젝션을 차단하는 업로드 보안 필터가 내장되어 있다.
+    </p>
+  </section>
+
+  <section class="section">
+    <p class="section-label">— Core Logic</p>
+    <p class="section-text">
+      트리 전체를 탐색하는 재귀 헬퍼 두 개(<code>findNode</code>, <code>findParent</code>)가
+      상태 변이의 핵심이다. 선택·이름 변경·삭제 모두 이 두 함수로 대상 노드를 찾은 뒤
+      불변 방식으로 트리를 갱신한다.
+    </p>
+    <div class="code-block"><pre>// 재귀 트리 탐색 — O(n) DFS
+function findNode(node, id) {
+    if (node.id === id) return node;
+    if (node.children) {
+        for (const child of node.children) {
+            const found = findNode(child, id);
+            if (found) return found;
+        }
+    }
+    return null;
+}
+
+function findParent(node, id) {
+    if (node.children) {
+        for (const child of node.children) {
+            if (child.id === id) return node;
+            const found = findParent(child, id);
+            if (found) return found;
+        }
+    }
+    return null;
+}</pre></div>
+    <p class="code-caption">file-manager.js — tree traversal helpers</p>
+
+    <p class="section-text">
+      파일 저장 전, 확장자와 콘텐츠를 두 단계로 검사해 서버 실행 가능한 파일을 차단한다.
+    </p>
+    <div class="code-block"><pre>// 1단계: 확장자 블랙리스트
+const BLOCKED_EXTENSIONS = [
+    '.php', '.phtml', '.exe', '.sh',
+    '.bash', '.asp', '.aspx', '.jsp',
+];
+
+// 2단계: 콘텐츠 패턴 검사
+const BLOCKED_PATTERNS = [
+    { pattern: /\.\./, desc: 'Path traversal (..)' },
+    { pattern: /^\.ht/, desc: '.ht* 서버 설정 파일' },
+    { pattern: /&lt;?php/i, desc: 'PHP 태그 인젝션' },
+];</pre></div>
+    <p class="code-caption">file-manager.js — security filter</p>
+  </section>
+
+  <section class="section">
+    <p class="section-label">— How It Works</p>
+    <ol class="flow-list">
+      <li>앱 초기화 시 <code>file-tree-data.js</code>의 JSON 트리를 로드하고 각 노드에 고유 ID를 재귀 할당한다.</li>
+      <li>트리 패널을 재귀 렌더링한다. 디렉토리 클릭 시 <code>expandedDirs</code> Set을 토글하고 리렌더링한다.</li>
+      <li>파일 클릭 시 <code>findNode</code>로 노드를 찾고, CodeMirror 인스턴스에 파일 내용과 언어 모드를 주입한다.</li>
+      <li>Save 버튼을 누르면 보안 필터를 통과한 뒤 <code>state.tree</code>의 해당 노드 <code>content</code>를 업데이트한다.</li>
+      <li>Preview 버튼을 누르면 저장된 HTML을 <code>srcdoc</code>로 iframe에 주입해 즉시 렌더링한다.</li>
+    </ol>
+  </section>
+
+  <div class="cta">
+    <a href="../demos/file-manager/index.html" class="cta-link">View Demo →</a>
+  </div>
+
+</div>
+</body>
+</html>

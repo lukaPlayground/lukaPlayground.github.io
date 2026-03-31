@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tutorial — Luka's Playground</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="detail.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="top-bar">
+    <a href="../index.html" class="site-name">Luka's Playground</a>
+    <a href="../index.html#projects" class="back-link">← Work</a>
+  </header>
+
+  <div class="project-header">
+    <p class="project-label">Project</p>
+    <h1 class="project-title">Tutorial<br>(33)</h1>
+    <p class="project-tags">Vanilla · React · Next.js</p>
+  </div>
+
+  <section class="section">
+    <p class="section-label">— Overview</p>
+    <p class="section-text">
+      Vanilla JS부터 React, Next.js까지 33개의 프론트엔드 튜토리얼을 모아놓은 컬렉션.
+      각 튜토리얼은 독립 실행 가능한 예제로 구성되어 있으며,
+      개념 설명 없이 코드와 동작 결과만으로 패턴을 익힐 수 있도록 설계되었다.
+    </p>
+    <p class="section-text">
+      이벤트 위임, 상태 관리, 비동기 패턴, 커스텀 훅, 서버 컴포넌트 등
+      실무에서 자주 마주치는 주제를 다룬다.
+    </p>
+  </section>
+
+  <section class="section">
+    <p class="section-label">— Core Logic</p>
+    <p class="section-text">
+      <strong>이벤트 위임</strong> — 개별 자식 요소마다 리스너를 붙이는 대신
+      부모 한 곳에서 이벤트를 위임해 메모리를 절약하고 동적 요소를 처리한다.
+    </p>
+    <div class="code-block"><pre>// Bad: 리스트 아이템마다 리스너 등록
+items.forEach(item => {
+    item.addEventListener('click', handleClick);
+});
+
+// Good: 부모에 한 번만 등록 — 이벤트 위임
+document.querySelector('.list').addEventListener('click', e => {
+    const item = e.target.closest('[data-id]');
+    if (!item) return;
+    handleClick(item.dataset.id);
+});</pre></div>
+    <p class="code-caption">01-event-delegation — vanilla JS</p>
+
+    <p class="section-text">
+      <strong>커스텀 훅</strong> — 반복되는 fetch 로직을 <code>useFetch</code>로 추상화해
+      컴포넌트가 데이터 페칭 세부 사항을 몰라도 되게 한다.
+    </p>
+    <div class="code-block"><pre>// hooks/useFetch.js
+function useFetch(url) {
+    const [data,    setData]    = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error,   setError]   = useState(null);
+
+    useEffect(() => {
+        let cancelled = false;
+        setLoading(true);
+
+        fetch(url)
+            .then(r => r.json())
+            .then(d => { if (!cancelled) setData(d); })
+            .catch(e => { if (!cancelled) setError(e); })
+            .finally(() => { if (!cancelled) setLoading(false); });
+
+        return () => { cancelled = true; }; // 언마운트 시 응답 무시
+    }, [url]);
+
+    return { data, loading, error };
+}</pre></div>
+    <p class="code-caption">17-custom-hook — React</p>
+  </section>
+
+  <section class="section">
+    <p class="section-label">— How It Works</p>
+    <ol class="flow-list">
+      <li>33개 튜토리얼은 Vanilla JS(01–12), React(13–24), Next.js(25–33) 세 카테고리로 나뉜다.</li>
+      <li>각 예제는 독립 디렉토리로 구성되며, 별도 빌드 없이 브라우저에서 바로 실행할 수 있다.</li>
+      <li>튜토리얼 목록 페이지에서 제목·기술 스택으로 필터링해 원하는 예제로 바로 이동한다.</li>
+      <li>코드 하이라이팅과 라이브 프리뷰를 나란히 제공해 구현 결과를 즉시 확인할 수 있다.</li>
+    </ol>
+  </section>
+
+  <div class="cta">
+    <a href="https://lukaplayground.github.io/tutorial" target="_blank" rel="noopener" class="cta-link">View Collection →</a>
+  </div>
+
+</div>
+</body>
+</html>

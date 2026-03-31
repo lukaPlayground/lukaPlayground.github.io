@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ticket Timer — Luka's Playground</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="detail.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="top-bar">
+    <a href="../index.html" class="site-name">Luka's Playground</a>
+    <a href="../index.html#projects" class="back-link">← Work</a>
+  </header>
+
+  <div class="project-header">
+    <p class="project-label">Project</p>
+    <h1 class="project-title">Ticket<br>Timer</h1>
+    <p class="project-tags">JS · Chrome Ext · MV3</p>
+  </div>
+
+  <section class="section">
+    <p class="section-label">— Overview</p>
+    <p class="section-text">
+      콘서트·스포츠 티켓팅 오픈 시각에 맞춰 탭을 자동으로 활성화하고 새로고침하는
+      Chrome Manifest V3 확장 프로그램이다.
+    </p>
+    <p class="section-text">
+      로컬 시계가 수 초 빠르거나 느릴 수 있다는 점에 착안해,
+      HTTP HEAD 요청으로 외부 서버 시간을 가져와 오차를 보정한다.
+      보정된 시간을 기준으로 <code>setTimeout</code> 알람을 설정하므로
+      PC 시계가 틀려도 정확한 타이밍에 동작한다.
+    </p>
+  </section>
+
+  <section class="section">
+    <p class="section-label">— Core Logic</p>
+    <p class="section-text">
+      <strong>서버 시간 동기화</strong> — Google에 HEAD 요청을 보내고
+      응답 헤더의 <code>Date</code>와 왕복 지연(RTT)을 이용해 오프셋을 계산한다.
+      실패 시 Cloudflare trace API로 폴백한다.
+    </p>
+    <div class="code-block"><pre>async function syncServerTime() {
+    const t0 = Date.now();
+    const res = await fetch('https://www.google.com', { method: 'HEAD' });
+    const serverTime = new Date(res.headers.get('date')).getTime();
+    const rtt = Date.now() - t0;
+
+    // 왕복 지연의 절반을 더해 단방향 오차를 추정
+    serverTimeOffset = serverTime - Date.now() + (rtt / 2);
+}
+
+function getAccurateTime() {
+    return new Date(Date.now() + serverTimeOffset);
+}</pre></div>
+    <p class="code-caption">background.js — server time sync</p>
+
+    <p class="section-text">
+      <strong>알람 설정</strong> — 보정된 현재 시각과 오픈 시각의 차이를
+      <code>setTimeout</code>의 delay로 사용한다.
+      탭 배지에는 남은 시간(일/시/분/초)을 1초 단위로 업데이트한다.
+    </p>
+    <div class="code-block"><pre>function setAlarmForTab(tabId, timer) {
+    const delay = new Date(timer.openTime) - getAccurateTime();
+    if (delay <= 0) return;
+
+    const timeoutId = setTimeout(() => {
+        handleAlarmTrigger(tabId, timer);
+    }, delay);
+
+    activeAlarms[tabId] = { timeoutId, timer };
+    updateBadgeForTab(tabId); // 카운트다운 배지 시작
+}
+
+async function handleAlarmTrigger(tabId, timer) {
+    // 알림 표시 → 탭 포커스 → 자동 새로고침
+    chrome.notifications.create(`timer-${tabId}`, { ... });
+    await chrome.tabs.update(tabId, { active: true });
+    if (timer.autoRefresh) await chrome.tabs.reload(tabId);
+}</pre></div>
+    <p class="code-caption">background.js — alarm trigger</p>
+  </section>
+
+  <section class="section">
+    <p class="section-label">— How It Works</p>
+    <ol class="flow-list">
+      <li>확장 설치 또는 Chrome 시작 시 서비스 워커가 <code>syncServerTime()</code>을 실행해 로컬 시계 오차를 측정한다.</li>
+      <li>팝업에서 현재 탭의 콘서트 이름과 티켓 오픈 시각을 입력하면 <code>chrome.storage.local</code>에 저장된다.</li>
+      <li><code>setAlarmForTab()</code>이 보정된 시각 기준 delay를 계산하고 <code>setTimeout</code> 알람을 등록한다.</li>
+      <li>탭 아이콘 배지가 남은 시간을 1초 단위로 카운트다운한다.</li>
+      <li>오픈 시각 도래 시 알림을 띄우고, 해당 탭을 포커스한 뒤 자동 새로고침한다.</li>
+    </ol>
+  </section>
+
+  <div class="cta">
+    <a href="https://github.com/lukaPlayground/ticket-timer" target="_blank" rel="noopener" class="cta-link">View on GitHub →</a>
+  </div>
+
+</div>
+</body>
+</html>

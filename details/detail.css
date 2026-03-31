@@ -1,0 +1,190 @@
+/* ── Reset ─────────────────────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── Variables ──────────────────────────────────────── */
+:root {
+  --bg:      #f5f5f5;
+  --ink:     #000000;
+  --muted:   #bbbbbb;
+  --dim:     #666666;
+  --rule-lt: #e0e0e0;
+  --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-hd: 'Playfair Display', Georgia, serif;
+  --font-code: 'Menlo', 'Monaco', 'Courier New', monospace;
+}
+
+body {
+  font-family: var(--font-ui);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+}
+
+/* ── Layout ─────────────────────────────────────────── */
+.page {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 2.5rem 6rem;
+}
+
+/* ── Top Bar ────────────────────────────────────────── */
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid var(--ink);
+  margin-bottom: 3.5rem;
+}
+
+.site-name {
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.back-link {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--dim);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.back-link:hover { color: var(--ink); }
+
+/* ── Project Header ─────────────────────────────────── */
+.project-header {
+  margin-bottom: 3.5rem;
+}
+
+.project-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+
+.project-title {
+  font-family: var(--font-hd);
+  font-weight: 900;
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  line-height: 1.0;
+  margin-bottom: 0.85rem;
+}
+
+.project-tags {
+  font-size: 0.7rem;
+  color: var(--dim);
+  letter-spacing: 0.05em;
+}
+
+/* ── Sections ───────────────────────────────────────── */
+.section {
+  margin-bottom: 3rem;
+}
+
+.section-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule-lt);
+  margin-bottom: 1.25rem;
+}
+
+.section-text {
+  font-size: 0.92rem;
+  line-height: 1.8;
+  color: var(--ink);
+}
+
+.section-text + .section-text {
+  margin-top: 0.75rem;
+}
+
+/* ── Code Blocks ────────────────────────────────────── */
+.code-block {
+  background: #e6e6e6;
+  border-left: 3px solid var(--ink);
+  padding: 1.25rem 1.5rem;
+  margin: 1.25rem 0;
+  overflow-x: auto;
+}
+
+.code-block pre {
+  font-family: var(--font-code);
+  font-size: 0.775rem;
+  line-height: 1.7;
+  color: #111;
+  white-space: pre;
+}
+
+.code-caption {
+  font-family: var(--font-code);
+  font-size: 0.62rem;
+  color: var(--dim);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: -0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+/* ── Flow List ──────────────────────────────────────── */
+.flow-list {
+  list-style: none;
+  counter-reset: flow;
+}
+
+.flow-list li {
+  counter-increment: flow;
+  display: flex;
+  gap: 1.25rem;
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--rule-lt);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.flow-list li::before {
+  content: counter(flow, decimal-leading-zero);
+  font-family: var(--font-code);
+  font-size: 0.62rem;
+  color: var(--muted);
+  min-width: 1.75rem;
+  padding-top: 0.2rem;
+  flex-shrink: 0;
+}
+
+/* ── CTA ────────────────────────────────────────────── */
+.cta {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid var(--ink);
+}
+
+.cta-link {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 0.15rem;
+  transition: opacity 0.2s;
+}
+.cta-link:hover { opacity: 0.45; }
+
+/* ── Responsive ─────────────────────────────────────── */
+@media (max-width: 768px) {
+  .page { padding: 1.5rem 1.5rem 4rem; }
+}

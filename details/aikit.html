@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AIKit — Luka's Playground</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="detail.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="top-bar">
+    <a href="../index.html" class="site-name">Luka's Playground</a>
+    <a href="../index.html#projects" class="back-link">← Work</a>
+  </header>
+
+  <div class="project-header">
+    <p class="project-label">Project</p>
+    <h1 class="project-title">AIKit</h1>
+    <p class="project-tags">JS · npm · AI</p>
+  </div>
+
+  <section class="section">
+    <p class="section-label">— Overview</p>
+    <p class="section-text">
+      OpenAI, Claude, Gemini를 단일 인터페이스로 호출하는 경량 JavaScript 라이브러리.
+      CDN 한 줄 또는 <code>npm install</code>로 설치하며,
+      빌드 도구 없이 순수 HTML에서도 동작한다.
+    </p>
+    <p class="section-text">
+      Provider Adapter 패턴으로 각 AI API의 차이를 추상화하고,
+      LocalStorage 캐싱·자동 Fallback·실시간 비용 추적을 내장해
+      프로덕션 수준의 안정성을 제공한다.
+    </p>
+  </section>
+
+  <section class="section">
+    <p class="section-label">— Core Logic</p>
+    <p class="section-text">
+      생성자에서 provider 이름을 받아 해당 Adapter 인스턴스를 로드한다.
+      이후 모든 호출은 동일한 <code>chat()</code> 메서드로 처리된다.
+    </p>
+    <div class="code-block"><pre>class AIKit {
+    constructor(config) {
+        this.config  = { autoFallback: false, ...config };
+        this.adapter = this.loadAdapter(config.provider);
+        this.cache   = config.enableCache !== false
+                         ? new CacheManager() : null;
+        this.costTracker = new CostTracker();
+    }
+
+    loadAdapter(provider) {
+        const map = {
+            openai:  () => new OpenAIAdapter(this.config),
+            claude:  () => new ClaudeAdapter(this.config),
+            gemini:  () => new GeminiAdapter(this.config),
+        };
+        if (!map[provider]) throw new Error(`Unknown provider: ${provider}`);
+        return map[provider]();
+    }
+}</pre></div>
+    <p class="code-caption">src/core/AIKit.js — constructor & adapter factory</p>
+
+    <p class="section-text">
+      <code>chat()</code> 호출 시 캐시를 먼저 확인하고, API 오류 발생 시
+      <code>autoFallback</code> 옵션에 따라 다음 provider로 자동 전환한다.
+    </p>
+    <div class="code-block"><pre>async chat(prompt) {
+    // 1. 캐시 히트 → 즉시 반환
+    const cached = this.cache?.get(prompt);
+    if (cached) return cached;
+
+    try {
+        // 2. 어댑터를 통한 API 호출
+        const res = await this.adapter.chat(prompt);
+        this.cache?.set(prompt, res);
+        this.costTracker.record(res.usage);
+        return res;
+    } catch (err) {
+        // 3. 실패 시 자동 Fallback
+        if (this.config.autoFallback) {
+            return this.tryFallback(prompt);
+        }
+        throw err;
+    }
+}</pre></div>
+    <p class="code-caption">src/core/AIKit.js — chat with cache & fallback</p>
+  </section>
+
+  <section class="section">
+    <p class="section-label">— How It Works</p>
+    <ol class="flow-list">
+      <li><code>new AIKit({ provider, apiKey })</code>로 인스턴스를 생성하면 해당 Provider Adapter가 초기화된다.</li>
+      <li><code>ai.chat(prompt)</code> 호출 시 LocalStorage 캐시에 동일 프롬프트가 있으면 API 없이 즉시 반환한다.</li>
+      <li>캐시 미스 시 Adapter가 각 AI API 규격에 맞게 요청을 변환하고 호출한다.</li>
+      <li>응답을 캐시에 저장하고, CostTracker가 토큰 사용량을 기록한다.</li>
+      <li>API 오류 발생 시 <code>autoFallback: true</code>면 다음 우선순위 provider로 자동 전환해 재시도한다.</li>
+    </ol>
+  </section>
+
+  <div class="cta">
+    <a href="https://lukaplayground.github.io/aikit/" target="_blank" rel="noopener" class="cta-link">View Project →</a>
+  </div>
+
+</div>
+</body>
+</html>

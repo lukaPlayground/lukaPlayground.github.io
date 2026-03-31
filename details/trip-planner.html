@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trip Planner — Luka's Playground</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="detail.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="top-bar">
+    <a href="../index.html" class="site-name">Luka's Playground</a>
+    <a href="../index.html#projects" class="back-link">← Work</a>
+  </header>
+
+  <div class="project-header">
+    <p class="project-label">Project</p>
+    <h1 class="project-title">Trip<br>Planner</h1>
+    <p class="project-tags">React · Node.js · MongoDB</p>
+  </div>
+
+  <section class="section">
+    <p class="section-label">— Overview</p>
+    <p class="section-text">
+      날짜별 장소를 등록하고 여행 일정을 시각적으로 관리하는 풀스택 웹 앱.
+      React 프론트엔드와 Node.js/Express REST API, MongoDB Atlas를 조합했다.
+    </p>
+    <p class="section-text">
+      일정 생성·수정·삭제와 함께 각 날짜별 방문지 순서를 드래그로 재정렬할 수 있으며,
+      JWT 인증으로 사용자별 일정을 분리 저장한다.
+    </p>
+  </section>
+
+  <section class="section">
+    <p class="section-label">— Core Logic</p>
+    <p class="section-text">
+      MongoDB 스키마는 여행 → 날짜 배열 → 장소 배열의 중첩 구조로 설계한다.
+      하나의 Document 안에 전체 일정이 담기므로 조회 시 JOIN이 불필요하다.
+    </p>
+    <div class="code-block"><pre>// models/Trip.js
+const spotSchema = new Schema({
+    name:    { type: String, required: true },
+    address: String,
+    lat:     Number,
+    lng:     Number,
+    memo:    String,
+});
+
+const daySchema = new Schema({
+    date:  { type: Date, required: true },
+    spots: [spotSchema],
+});
+
+const tripSchema = new Schema({
+    title:  { type: String, required: true },
+    days:   [daySchema],
+    owner:  { type: Schema.Types.ObjectId, ref: 'User', required: true },
+}, { timestamps: true });</pre></div>
+    <p class="code-caption">models/Trip.js — MongoDB nested schema</p>
+
+    <p class="section-text">
+      React 상태는 불변 업데이트 패턴을 사용한다. 특정 날짜의 장소를 추가할 때
+      전체 <code>days</code> 배열을 새로 생성해 리렌더링을 보장한다.
+    </p>
+    <div class="code-block"><pre>// 장소 추가 — 불변 업데이트
+function addSpot(dayIndex, spot) {
+    setTrip(prev => {
+        const days = prev.days.map((day, i) =>
+            i === dayIndex
+                ? { ...day, spots: [...day.spots, spot] }
+                : day
+        );
+        return { ...prev, days };
+    });
+}</pre></div>
+    <p class="code-caption">hooks/useTrip.js — immutable state update</p>
+  </section>
+
+  <section class="section">
+    <p class="section-label">— How It Works</p>
+    <ol class="flow-list">
+      <li>로그인 시 JWT를 발급받아 <code>localStorage</code>에 저장한다. 이후 모든 API 요청 헤더에 토큰을 포함한다.</li>
+      <li>여행 생성 시 날짜 범위를 입력하면 해당 일수만큼 빈 <code>day</code> 배열이 자동 생성된다.</li>
+      <li>날짜별 카드에서 장소를 검색하고 추가하면 React 상태와 DB가 동시에 업데이트된다.</li>
+      <li>드래그 앤 드롭으로 장소 순서를 변경하면 새 순서로 <code>PATCH /trips/:id</code> 요청을 보낸다.</li>
+      <li>일정 목록 페이지에서 모든 여행을 카드 형태로 조회하고 공유 링크를 생성할 수 있다.</li>
+    </ol>
+  </section>
+
+  <div class="cta">
+    <a href="https://trip-planner-woad-seven.vercel.app" target="_blank" rel="noopener" class="cta-link">View Project →</a>
+  </div>
+
+</div>
+</body>
+</html>

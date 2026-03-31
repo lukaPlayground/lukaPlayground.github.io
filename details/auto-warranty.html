@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auto Warranty — Luka's Playground</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="detail.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="top-bar">
+    <a href="../index.html" class="site-name">Luka's Playground</a>
+    <a href="../index.html#projects" class="back-link">← Work</a>
+  </header>
+
+  <div class="project-header">
+    <p class="project-label">Project</p>
+    <h1 class="project-title">Auto<br>Warranty</h1>
+    <p class="project-tags">PHP · MySQL · REST API</p>
+  </div>
+
+  <section class="section">
+    <p class="section-label">— Overview</p>
+    <p class="section-text">
+      자동차 보증 계약을 온라인으로 신청·관리하는 B2C 플랫폼.
+      딜러와 고객이 계약 상태를 실시간으로 조회하고,
+      보증 범위·만료일·수리 이력을 한 화면에서 확인할 수 있다.
+    </p>
+    <p class="section-text">
+      PHP 백엔드에 MySQL 데이터베이스를 연결하고,
+      프론트엔드와는 JSON REST API로 통신한다.
+      세션 기반 인증과 역할별 접근 제어(딜러 / 고객 / 관리자)가 적용되어 있다.
+    </p>
+  </section>
+
+  <section class="section">
+    <p class="section-label">— Core Logic</p>
+    <p class="section-text">
+      모든 API 엔드포인트는 Prepared Statement로 SQL Injection을 차단하고,
+      <code>$_SESSION['user_id']</code>를 조건에 포함해 타인의 데이터 접근을 방지한다.
+    </p>
+    <div class="code-block"><pre>// GET /api/warranty/{id}
+function getWarranty(PDO $pdo, int $id): void
+{
+    $stmt = $pdo->prepare(
+        'SELECT w.*, v.model, v.vin, v.year
+           FROM warranties  w
+           JOIN vehicles    v ON v.id = w.vehicle_id
+          WHERE w.id = :id
+            AND w.user_id = :uid'   // 본인 데이터만 조회
+    );
+    $stmt->execute([':id' => $id, ':uid' => $_SESSION['user_id']]);
+
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    if (!$row) {
+        http_response_code(404);
+        echo json_encode(['error' => 'Not found']);
+        exit;
+    }
+
+    header('Content-Type: application/json');
+    echo json_encode($row);
+}</pre></div>
+    <p class="code-caption">api/warranty.php — GET endpoint with ownership check</p>
+
+    <p class="section-text">
+      보증 만료 여부는 DB 쿼리 시점에 계산해 반환한다.
+      만료 D-30 이내 계약은 별도 플래그로 표시해 갱신 알림을 트리거한다.
+    </p>
+    <div class="code-block"><pre>-- 만료 임박 계약 조회 (30일 이내)
+SELECT w.id, w.expires_at,
+       DATEDIFF(w.expires_at, CURDATE()) AS days_left,
+       v.model, u.email
+  FROM warranties w
+  JOIN vehicles   v ON v.id = w.vehicle_id
+  JOIN users      u ON u.id = w.user_id
+ WHERE w.status = 'active'
+   AND w.expires_at BETWEEN CURDATE()
+                        AND DATE_ADD(CURDATE(), INTERVAL 30 DAY);</pre></div>
+    <p class="code-caption">cron/notify_expiring.php — expiry check query</p>
+  </section>
+
+  <section class="section">
+    <p class="section-label">— How It Works</p>
+    <ol class="flow-list">
+      <li>고객이 차량 정보(VIN, 모델, 연식)를 입력하고 보증 플랜을 선택하면 <code>POST /api/warranty</code>로 계약이 생성된다.</li>
+      <li>딜러 승인 후 계약 상태가 <code>pending → active</code>로 변경되고 고객에게 이메일이 발송된다.</li>
+      <li>대시보드에서 <code>GET /api/warranty</code>로 전체 계약 목록을 조회하고, 만료 임박 건은 오렌지 배지로 표시한다.</li>
+      <li>수리 접수 시 정비소 코드와 내용을 <code>POST /api/claim</code>으로 등록하고 보증 범위 여부를 자동 판정한다.</li>
+      <li>Cron 작업이 매일 만료 30일 이내 계약을 조회해 갱신 안내 메일을 자동 발송한다.</li>
+    </ol>
+  </section>
+
+  <div class="cta">
+    <a href="https://rayda.co.kr" target="_blank" rel="noopener" class="cta-link">View Project →</a>
+  </div>
+
+</div>
+</body>
+</html>
