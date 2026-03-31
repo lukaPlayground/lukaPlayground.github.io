@@ -27,9 +27,10 @@ body {
 }
 
 /*
- * Grain texture — fixed pseudo-element overlay using SVG feTurbulence.
- * pointer-events:none ensures it never blocks clicks.
- * opacity kept very low (0.035) so it reads as texture, not noise.
+ * Scratch texture — mix-blend-mode:multiply makes dark marks blend
+ * into the background naturally; white areas of the SVG are invisible.
+ * baseFrequency x<<y creates elongated horizontal scratch shapes.
+ * feComponentTransfer discrete thresholds marks to sparse discrete spots.
  */
 body::before {
   content: '';
@@ -37,10 +38,11 @@ body::before {
   inset: 0;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  opacity: 0.15;
+  background-image: url("../images/white-grungy-wall-textured-background.png");
   background-repeat: repeat;
-  background-size: 200px 200px;
+  background-size: 700px auto;
 }
 
 .snap-container {
