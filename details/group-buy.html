@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Group Buy — Luka's Playground</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="detail.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="top-bar">
+    <a href="../index.html" class="site-name">Luka's Playground</a>
+    <a href="../index.html#projects" class="back-link">← Work</a>
+  </header>
+
+  <div class="project-header">
+    <p class="project-label">Project</p>
+    <h1 class="project-title">Group<br>Buy</h1>
+    <p class="project-tags">PHP · CodeIgniter 4 · NicePay · Cron</p>
+  </div>
+
+  <section class="section">
+    <p class="section-label">— Overview</p>
+    <p class="section-text">
+      고도몰(Godo Mall) 플랫폼에서 운영하던 공동구매 모듈을 CodeIgniter 4 기반
+      독립 웹앱으로 재구현한 프로젝트.
+      바스켓(공구) 단위로 상품을 묶어 신청자가 목표 수량을 달성하면 일괄 결제가
+      진행되는 방식으로, 싱글·멀티 바스켓 유형과 9단계 진행 상태 머신을 포함한다.
+    </p>
+    <p class="section-text">
+      사용자 화면(목록·상세·신청), 관리자 화면(공구 등록·상태 전환·신청자 관리),
+      NicePay PG 연동 구조, SMS 발송 로직, Cron 배치를 MVC 레이어로 분리해 구현했다.
+    </p>
+  </section>
+
+  <section class="section">
+    <p class="section-label">— Core Logic</p>
+    <p class="section-text">
+      공구의 진행 상태는 9단계 상수로 관리되며, <code>GroupBuyService</code>가
+      허용된 전환만 실행한다. 신청 시에는 바스켓 상태 확인과 중복 신청 방지를
+      서비스 레이어에서 처리하고, DB의 UNIQUE 제약으로 이중 방어한다.
+    </p>
+    <div class="code-block"><pre>// GroupBuyService::apply() — 신청 유효성 검사
+public function apply(array $basket, int $memNo): array
+{
+    if ($basket['progress'] !== self::STATUS_IN_PROGRESS) {
+        return ['success' => false, 'message' => '신청 가능한 공구가 아닙니다.'];
+    }
+
+    $existing = $this->applyModel->findActive($basket['code'], $memNo);
+    if ($existing) {
+        return ['success' => false, 'message' => '이미 신청한 공구입니다.'];
+    }
+
+    $this->applyModel->insert([...]);
+    $this->basketModel
+        ->set('current_qty', 'current_qty + 1', false)
+        ->where('code', $basket['code'])
+        ->update();
+
+    return ['success' => true, 'message' => '신청이 완료되었습니다.'];
+}</pre></div>
+    <p class="code-caption">app/Services/GroupBuyService.php — apply with validation</p>
+
+    <p class="section-text">
+      diy_price(공구 전용 할인가) 등록 시에는 관리자가 설정한 최대 할인율을 초과하지
+      않는지 검증한다. 실시간으로 계산해 거부 메시지에 실제 할인율을 포함한다.
+    </p>
+    <div class="code-block"><pre>// 할인율 상한 검증
+public function validateDiyPrice(int $goodsPrice, int $diyPrice, int $maxRate): array
+{
+    $rate = ($goodsPrice - $diyPrice) / $goodsPrice * 100;
+    if ($rate > $maxRate) {
+        return [
+            'valid'   => false,
+            'message' => "최대 할인율({$maxRate}%)을 초과했습니다. (현재 " . round($rate, 1) . "%)",
+        ];
+    }
+    return ['valid' => true];
+}</pre></div>
+    <p class="code-caption">app/Services/GroupBuyService.php — discount rate validation</p>
+  </section>
+
+  <section class="section">
+    <p class="section-label">— How It Works</p>
+    <ol class="flow-list">
+      <li>관리자가 상품을 선택하고 목표 수량·마감일·공구가를 설정해 공구를 등록한다. (상태: <code>01 시작대기</code>)</li>
+      <li>관리자가 "공구 시작" 버튼을 클릭하면 상태가 <code>03 진행중</code>으로 전환되고 기존 신청자에게 SMS가 발송된다.</li>
+      <li>회원이 상세 페이지에서 신청하면 <code>gb_applies</code>에 레코드가 생성되고 <code>current_qty</code>가 증가한다. UNIQUE 제약으로 중복 신청을 방지한다.</li>
+      <li>Cron 배치(<code>php spark basket:batch</code>)가 마감된 공구를 순회해 목표 달성 여부에 따라 <code>07 결제대기</code> 또는 <code>06 미달성실패</code>로 전환한다.</li>
+      <li>관리자가 결제대기 공구의 "결제 처리" 버튼을 클릭하면 NicePay Mock이 실행되고, 성공 시 <code>08 결제성공</code>으로 최종 완료된다.</li>
+    </ol>
+  </section>
+
+  <section class="section">
+    <p class="section-label">— Mock Services</p>
+    <p class="section-text">
+      실제 PG·SMS 연동 없이 구조와 데이터 흐름을 시현한다.
+    </p>
+    <div class="code-block"><pre>// NicePayMock — PG 연동 구조 시현
+NicePayMock::requestPayment($basketCode, $amount, $cardNo)
+// → ['status' => 'success', 'tid' => 'mock_GB20240101001_1704067200']
+
+// SmsMock — writable/logs/sms.log 에 기록
+SmsMock::send($email, 'basket_complete', ['goods' => '제주 감귤 5kg'])
+// [2024-01-01 12:00:00] TO:user@demo.com TMPL:basket_complete MSG:[공동구매] 목표 달성!
+
+// Cron 배치 — CI4 Spark 커맨드
+// $ php spark basket:batch
+// [달성] GB20240101002 → 결제대기(07)
+// [미달성] GB20240101003 → 미달성실패(06)</pre></div>
+    <p class="code-caption">app/Services/Mock/ — NicePayMock, SmsMock · app/Commands/BasketStatusBatch.php</p>
+  </section>
+
+  <div class="cta">
+    <a href="https://github.com/lukaPlayground/group-buy" target="_blank" rel="noopener" class="cta-link">View on GitHub →</a>
+  </div>
+
+</div>
+</body>
+</html>
