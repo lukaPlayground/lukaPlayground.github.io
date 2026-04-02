@@ -146,7 +146,8 @@ body {
 
 .flow-list li {
   counter-increment: flow;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1.75rem 1fr;
   gap: 1.25rem;
   padding: 0.8rem 0;
   border-bottom: 1px solid var(--rule-lt);
