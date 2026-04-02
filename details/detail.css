@@ -146,8 +146,9 @@ body {
 
 .flow-list li {
   counter-increment: flow;
+  position: relative;
   display: block;
-  padding: 0.8rem 0;
+  padding: 0.8rem 0 0.8rem 2.5rem;
   border-bottom: 1px solid var(--rule-lt);
   font-size: 0.9rem;
   line-height: 1.6;
@@ -155,10 +156,13 @@ body {
 
 .flow-list li::before {
   content: counter(flow, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
   font-family: var(--font-code);
   font-size: 0.62rem;
   color: var(--muted);
-  padding-right: 0.6rem;
 }
 
 /* ── Inline code inside flow-list ──────────────────── */
