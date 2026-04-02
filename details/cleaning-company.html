@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cleaning Co. UI — Luka's Playground</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="detail.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="top-bar">
+    <a href="../index.html" class="site-name">Luka's Playground</a>
+    <a href="../index.html#projects" class="back-link">← Work</a>
+  </header>
+
+  <div class="project-header">
+    <p class="project-label">UI Publishing</p>
+    <h1 class="project-title">Cleaning<br>Co. UI</h1>
+    <p class="project-tags">HTML · CSS · jQuery · Responsive</p>
+  </div>
+
+  <section class="section">
+    <p class="section-label">— Overview</p>
+    <p class="section-text">
+      입주청소 정보 플랫폼 '클린벨(Cleanbell)'의 사용자 화면 전체를 퍼블리싱한 작업물.
+      디자인 시안을 바탕으로 메인·랜딩·업체 탐색·신청·마이페이지까지
+      14개 페이지를 HTML/CSS로 구현했다.
+    </p>
+    <p class="section-text">
+      PC·모바일 반응형(640px 기준)을 CSS 분리 방식으로 작성했으며,
+      owl.carousel · slick · jQuery UI datepicker 등 외부 라이브러리를
+      레이아웃에 맞게 커스터마이징했다.
+    </p>
+  </section>
+
+  <section class="section">
+    <p class="section-label">— Pages</p>
+    <ol class="flow-list">
+      <li><strong>Main</strong> — 플랫폼 진입점. 카운팅 애니메이션, owl.carousel 배너, 업체 탐색 CTA.</li>
+      <li><strong>Landing</strong> — 파트너 업체 가입신청 랜딩. slick 슬라이더 사용 후기, 요금제 안내.</li>
+      <li><strong>Company List A / B</strong> — 필터(지역·청소종류·날짜) + 업체 목록. A는 리스트형, B는 지도 병렬형.</li>
+      <li><strong>Select Company</strong> — 업체 비교 선택 플로우.</li>
+      <li><strong>Ranking</strong> — 신뢰 랭킹 배너 + 순위별 업체 카드.</li>
+      <li><strong>Company Detail A / B / C</strong> — 업체 상세. 시공 갤러리, 리뷰, 서비스 탭을 버전별로 구현.</li>
+      <li><strong>Apply Detail A / B / C</strong> — 신청 내역 확인. 진행 단계 UI, 견적 상세 구성.</li>
+      <li><strong>Rate Calculate</strong> — 평형·옵션 입력 기반 청소 요금 계산기.</li>
+      <li><strong>My Page</strong> — 신청 내역·리뷰·포인트 탭 마이페이지.</li>
+    </ol>
+  </section>
+
+  <section class="section">
+    <p class="section-label">— Structure</p>
+    <p class="section-text">
+      CSS는 공통(<code>default.css</code>) · 컴포넌트(<code>cleaner.css</code>) ·
+      반응형(<code>cleaner-640.css</code>) · 서브페이지(<code>cleaner-sub.css</code>)로
+      4파일 분리해 관리했다.
+    </p>
+    <div class="code-block"><pre>html/
+├── cleaner/          ← HTML 14개
+│   ├── cleaner_main.html
+│   ├── cleaner_landing.html
+│   ├── companyList_01~02.html
+│   ├── companyDetail_01~03-1.html
+│   ├── applyDetail_01~03.html
+│   ├── selectCompany.html
+│   ├── ranking.html
+│   ├── ratecalculate.html
+│   └── mypage.html
+├── css-v4/           ← cleaner.css · cleaner-640.css (반응형)
+│                        cleaner-sub.css · cleaner-sub-640.css
+├── css-v2/           ← reset · default · 라이브러리 CSS
+├── images-v4/        ← 335개 에셋
+├── images-v2/        ← 148개 에셋
+├── js/ js-v2/        ← jQuery · owl.carousel · slick · cleaner.js
+└── fonts/            ← NotoSansKR · Lato · Roboto</pre></div>
+    <p class="code-caption">디렉토리 구조 — 리소스 전체 로컬 내장</p>
+  </section>
+
+  <div class="cta">
+    <a href="https://lukaplayground.github.io/cleaning-co-demo/" target="_blank" rel="noopener" class="cta-link">Live Demo →</a>
+  </div>
+
+</div>
+</body>
+</html>
