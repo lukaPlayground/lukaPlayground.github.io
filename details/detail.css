@@ -146,9 +146,7 @@ body {
 
 .flow-list li {
   counter-increment: flow;
-  display: grid;
-  grid-template-columns: 1.75rem 1fr;
-  gap: 1.25rem;
+  display: block;
   padding: 0.8rem 0;
   border-bottom: 1px solid var(--rule-lt);
   font-size: 0.9rem;
@@ -167,6 +165,7 @@ body {
 
 /* ── Inline code inside flow-list ──────────────────── */
 .flow-list li code {
+  display: inline;
   font-family: inherit;
   font-size: inherit;
   background: #e8e8e8;
