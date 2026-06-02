@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Analytics Dashboard — Luka's Playground</title>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="detail.css">
+</head>
+<body>
+<div class="page">
+
+  <header class="top-bar">
+    <a href="../index.html" class="site-name">Luka's Playground</a>
+    <a href="../index.html#projects" class="back-link">← Work</a>
+  </header>
+
+  <div class="project-header">
+    <p class="project-label">Project</p>
+    <h1 class="project-title">SQL Analytics<br>Dashboard</h1>
+    <p class="project-tags">SQL · Node.js · Chart.js · MySQL</p>
+  </div>
+
+  <section class="section">
+    <p class="section-label">— Overview</p>
+    <p class="section-text">
+      Northwind 데이터베이스를 활용해 실무에서 자주 쓰이는 SQL 기법 4가지를
+      인터랙티브 차트로 시각화한 포트폴리오 대시보드.
+    </p>
+    <p class="section-text">
+      단순히 쿼리 결과를 보여주는 것을 넘어, 각 기법을 왜 사용하는지 — 비즈니스 맥락과
+      기술적 선택 이유까지 함께 설명한다. Node.js/Express 백엔드는 Render에,
+      Vanilla JS 프론트엔드는 Vercel에 분리 배포한다.
+    </p>
+  </section>
+
+  <section class="section">
+    <p class="section-label">— Core Logic</p>
+    <p class="section-text">
+      각 SQL 기법은 독립된 Express 라우트 파일로 1:1 대응된다.
+      새 쿼리를 추가할 때 라우트 파일 하나와 프론트 탭 하나만 추가하면 되는 구조다.
+    </p>
+    <div class="code-block"><pre>-- WINDOW FUNCTION: 서브쿼리 없이 단일 패스로 순위 부여
+SELECT
+  product_name,
+  total_quantity,
+  RANK() OVER (ORDER BY total_quantity DESC) AS ranking
+FROM (
+  SELECT
+    p.product_name,
+    SUM(od.quantity) AS total_quantity
+  FROM order_details od
+  JOIN products p ON od.product_id = p.id
+  GROUP BY p.id, p.product_name
+) AS aggregated
+ORDER BY ranking
+LIMIT 10;</pre></div>
+    <p class="code-caption">routes/productRanking.js — RANK() OVER window function</p>
+
+    <p class="section-text">
+      CTE는 복잡한 집계를 단계별로 분리해 가독성을 높인다.
+      고객별 총 매출을 먼저 집계한 뒤, 메인 쿼리에서 상위 결과를 선택하고
+      전체 매출 대비 비중을 프론트에서 계산해 표시한다.
+    </p>
+    <div class="code-block"><pre>-- CTE: 다단계 집계를 선형적으로 읽을 수 있게
+WITH customer_totals AS (
+  SELECT
+    c.id,
+    c.company AS customer_name,
+    ROUND(SUM(od.unit_price * od.quantity * (1 - od.discount)), 2) AS total_revenue
+  FROM customers c
+  JOIN orders o ON c.id = o.customer_id
+  JOIN order_details od ON o.id = od.order_id
+  GROUP BY c.id, c.company
+)
+SELECT customer_name, total_revenue
+FROM customer_totals
+ORDER BY total_revenue DESC
+LIMIT 10;</pre></div>
+    <p class="code-caption">routes/customerCte.js — CTE multi-step aggregation</p>
+  </section>
+
+  <section class="section">
+    <p class="section-label">— How It Works</p>
+    <ol class="flow-list">
+      <li>사이드바에서 탭을 선택하면 해당 SQL 기법의 비즈니스 맥락과 기법 선택 이유를 먼저 보여준다.</li>
+      <li>프론트엔드가 Express 백엔드에 fetch 요청을 보내 쿼리를 실행하고 JSON 결과를 받는다.</li>
+      <li>실행된 SQL 쿼리가 코드 블록으로 표시되고, Chart.js가 결과를 차트로 렌더링한다.</li>
+      <li>차트 아래 인사이트 한 줄이 데이터에서 자동으로 도출된다 (최고/최저 월, 1위 상품 등).</li>
+      <li>DATABASE 탭에서 분석에 사용된 Northwind 원본 테이블을 직접 조회할 수 있다.</li>
+    </ol>
+  </section>
+
+  <div class="cta">
+    <a href="https://sql-analytics-dashboard-kappa.vercel.app" target="_blank" rel="noopener" class="cta-link">View Project →</a>
+  </div>
+
+</div>
+</body>
+</html>
