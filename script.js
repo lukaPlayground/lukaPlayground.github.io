@@ -1,3 +1,15 @@
+// ── Visitor counter ──────────────────────────────────
+(async () => {
+  try {
+    const res  = await fetch('https://api.countapi.xyz/hit/lukaplayground.github.io/visits');
+    const data = await res.json();
+    const el   = document.getElementById('visitor-count');
+    if (el && data.value) {
+      el.textContent = data.value.toLocaleString() + ' visits';
+    }
+  } catch (_) { /* silently ignore if API is unavailable */ }
+})();
+
 (() => {
   const snapContainer   = document.querySelector('.snap-container');
   const dotNav          = document.querySelector('.dot-nav');

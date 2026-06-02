@@ -84,6 +84,15 @@ body {
   color: var(--muted);
 }
 
+.hero-visitors {
+  font-family: var(--font-ui);
+  font-weight: 400;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
 .hero-title-wrap {
   flex: 1;
   display: flex;
