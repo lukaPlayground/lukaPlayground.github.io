@@ -5,9 +5,9 @@
     const data = await res.json();
     const el   = document.getElementById('visitor-count');
     if (el && data.value) {
-      el.textContent = data.value.toLocaleString() + ' visits';
+      el.textContent = 'VISITORS ' + data.value.toLocaleString();
     }
-  } catch (_) { /* silently ignore if API is unavailable */ }
+  } catch (_) { /* silently ignore — default "VISITORS 0" stays */ }
 })();
 
 (() => {
