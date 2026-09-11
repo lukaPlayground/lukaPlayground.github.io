@@ -5,11 +5,13 @@
 
 /* ── Variables ──────────────────────────────────────── */
 :root {
-  --bg:       #f5f5f5;
-  --ink:      #000000;
-  --muted:    #bbbbbb;
-  --dim:      #666666;
-  --rule-lt:  #e0e0e0;
+  --bg:       #f8f9fa;
+  --ink:      #111111;
+  --muted:    #a0a0a0;
+  --dim:      #555555;
+  --rule-lt:  #e2e8f0;
+  --accent:   #2563eb;
+  --accent-bg:#eff6ff;
   --font-ui:  'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-hd:  'Playfair Display', Georgia, serif;
 }
@@ -24,21 +26,33 @@ body {
   font-family: var(--font-ui);
   background: var(--bg);
   color: var(--ink);
+  line-height: 1.5;
 }
-
 
 .snap-container {
   height: 100%;
   overflow-y: scroll;
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y proximity;
   scroll-behavior: smooth;
 }
 
-/* ── Shared container ───────────────────────────────── */
+/* ── Shared Container & Section Header ───────────────── */
 .container {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 2.5rem;
+}
+
+.section-header {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding-bottom: 0.8rem;
+  border-bottom: 2px solid var(--ink);
+  margin-bottom: 2rem;
 }
 
 /* ── Animation ──────────────────────────────────────── */
@@ -68,8 +82,8 @@ body {
 
 .hero-logo {
   font-family: var(--font-ui);
-  font-weight: 700;
-  font-size: 0.75rem;
+  font-weight: 800;
+  font-size: 0.8rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink);
@@ -77,7 +91,7 @@ body {
 
 .hero-role {
   font-family: var(--font-ui);
-  font-weight: 400;
+  font-weight: 500;
   font-size: 0.7rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -93,7 +107,7 @@ body {
 
 .hero-visitors {
   font-family: var(--font-ui);
-  font-weight: 400;
+  font-weight: 500;
   font-size: 0.7rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -109,14 +123,14 @@ body {
 .hero-title {
   font-family: var(--font-hd);
   font-weight: 900;
-  font-size: clamp(4rem, 10vw, 8rem);
+  font-size: clamp(3.8rem, 9.5vw, 7.5rem);
   line-height: 1.0;
   display: flex;
   flex-direction: column;
 }
 
 .hero-title .verb { color: var(--ink); }
-.hero-title .mod  { color: var(--muted); }
+.hero-title .mod  { color: #cccccc; }
 
 .hero-bottom {
   display: flex;
@@ -129,8 +143,8 @@ body {
 
 .hero-stack {
   font-family: var(--font-ui);
-  font-weight: 600;
-  font-size: 0.65rem;
+  font-weight: 700;
+  font-size: 0.7rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--ink);
@@ -138,109 +152,266 @@ body {
 
 .hero-scroll {
   font-family: var(--font-ui);
-  font-weight: 400;
-  font-size: 0.6rem;
-  color: #888;
+  font-weight: 500;
+  font-size: 0.65rem;
+  color: #777;
   letter-spacing: 0.1em;
+}
+
+/* ── About & Skills ─────────────────────────────────── */
+.about {
+  scroll-snap-align: start;
+  min-height: 100vh;
+  padding: 2rem 2.5rem 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 3.5rem;
+  align-items: start;
+}
+
+.about-title {
+  font-family: var(--font-ui);
+  font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--ink);
+  margin-bottom: 1.2rem;
+  letter-spacing: -0.02em;
+}
+
+.about-title strong {
+  font-weight: 800;
+  border-bottom: 2px solid var(--ink);
+}
+
+.about-text {
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+  word-break: keep-all;
+}
+
+.about-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.highlight-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 1rem;
+  background: #ffffff;
+  border: 1px solid var(--rule-lt);
+  border-radius: 6px;
+}
+
+.highlight-num {
+  font-family: var(--font-ui);
+  font-weight: 800;
+  font-size: 0.75rem;
+  color: var(--accent);
+}
+
+.highlight-text {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.about-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background: #ffffff;
+  padding: 1.8rem;
+  border: 1px solid var(--rule-lt);
+  border-radius: 8px;
+}
+
+.skill-category {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+  text-transform: uppercase;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.skill-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.3rem 0.7rem;
+  background: #f1f5f9;
+  color: #1e293b;
+  border-radius: 4px;
+  border: 1px solid #e2e8f0;
 }
 
 /* ── Projects ───────────────────────────────────────── */
 .projects {
   scroll-snap-align: start;
-  scroll-snap-stop: always;
   min-height: 100vh;
-  padding: 2rem 2.5rem;
+  padding: 2rem 2.5rem 4rem;
 }
 
 .projects .container {
-  max-width: none;
+  max-width: 1200px;
   padding: 0;
 }
 
-.projects-header {
-  font-family: var(--font-ui);
-  font-weight: 700;
-  font-size: 0.7rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--ink);
-  padding-bottom: 0.6rem;
-  border-bottom: 2px solid var(--ink);
-  margin-bottom: 0;
-}
-
-/*
- * .project-row uses display:subgrid (not display:contents).
- * display:contents removes the box from the render tree, breaking :hover.
- * subgrid shares the parent's column tracks while keeping .project-row
- * as a real hit-test target, so :hover works correctly.
- * Supported: Chrome 117+, Firefox 71+, Safari 16+ (all modern browsers).
- *
- * subgrid parent context: .project-list IS the parent grid that defines
- * the 3 column tracks. .project-row is a direct child of .project-list,
- * so `grid-template-columns: subgrid` refers to .project-list's tracks.
- */
 .project-list {
-  display: grid;
-  grid-template-columns: 1fr auto auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .project-row {
-  display: grid;
-  grid-template-columns: subgrid;
-  grid-column: 1 / -1;
-  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  background: #ffffff;
+  border: 1px solid var(--rule-lt);
+  border-radius: 8px;
   position: relative;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/*
- * Stretched link — .project-link::after covers the entire row,
- * making the whole row clickable while keeping the arrow visible.
- * Only applies when the link has an href (i.e. not an empty <span>).
- */
+.project-row:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+.project-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: 45%;
+}
+
+.project-title-area {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.project-name {
+  font-family: var(--font-ui);
+  font-weight: 800;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+}
+
+.project-desc {
+  font-size: 0.8rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.project-tags .tag {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #475569;
+  background: #f1f5f9;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+}
+
+.project-impact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
+  max-width: 35%;
+}
+
+.impact-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--accent-bg);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  letter-spacing: 0.03em;
+}
+
+.impact-badge.private-badge {
+  color: #d97706;
+  background: #fffbeb;
+}
+
+.impact-text {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #334155;
+  line-height: 1.35;
+  word-break: keep-all;
+}
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: var(--ink);
+  text-decoration: none;
+  padding: 0.6rem 1rem;
+  border-radius: 6px;
+  background: #f8fafc;
+  border: 1px solid var(--rule-lt);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
 .project-link[href]::after {
   content: '';
   position: absolute;
   inset: 0;
 }
 
-.project-row:hover .project-name { color: #555; }
-.project-row:hover .project-link { color: #555; }
-
-.project-name {
-  font-family: var(--font-ui);
-  font-weight: 700;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--ink);
-  padding: 1.1rem 0;
-  border-bottom: 1px solid var(--rule-lt);
-  transition: color 0.2s ease;
+.project-row:hover .project-link {
+  background: var(--ink);
+  color: #ffffff;
+  border-color: var(--ink);
 }
 
-.project-tags {
-  font-family: var(--font-ui);
-  font-weight: 400;
-  font-size: 0.7rem;
-  color: var(--dim);
-  padding: 1.1rem 1.5rem;
-  border-bottom: 1px solid var(--rule-lt);
-  white-space: nowrap;
+.project-link.disabled {
+  opacity: 0.5;
+  cursor: default;
+  background: #f1f5f9;
+  color: #94a3b8;
+  border-color: #e2e8f0;
 }
 
-.project-link {
-  font-family: var(--font-ui);
-  font-weight: 700;
-  font-size: 0.75rem;
-  color: var(--ink);
-  text-decoration: none;
-  padding: 1.1rem 0;
-  border-bottom: 1px solid var(--rule-lt);
-  transition: color 0.2s ease;
-  min-width: 1.5rem;
-  text-align: center;
-  display: block;
+.project-row--more {
+  background: #f1f5f9;
+  border-style: dashed;
 }
 
 .project-row--more .project-name {
@@ -367,8 +538,36 @@ a:visited {
 .dot-nav.dot-nav--dark .dot.active { background: #fff; }
 
 /* ── Responsive ─────────────────────────────────────── */
+@media (max-width: 900px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .project-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .project-info, .project-impact {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .project-link {
+    align-self: flex-start;
+  }
+}
+
 @media (max-width: 768px) {
-  .hero    { padding: 1.5rem; }
+  .snap-container {
+    scroll-snap-type: none;
+  }
+
+  .hero    { padding: 1.5rem; height: auto; min-height: 100vh; }
+  .about   { padding: 2rem 1.5rem; }
+  .projects{ padding: 2rem 1.5rem; }
   .contact { padding: 1.5rem; }
   .dot-nav { right: 0.75rem; }
 }
